@@ -1,6 +1,9 @@
 name: build-container
 
 on:
+  push:
+    branches:
+      - "main"
   workflow_dispatch:
 jobs:
   build:
@@ -33,6 +36,6 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_NAME }}
-            # sudo docker stop ${{ vars.DOCKER_NAME }}
-            # sudo docker rm ${{ vars.DOCKER_NAME }}
+            sudo docker stop ${{ vars.DOCKER_NAME }}
+            sudo docker rm ${{ vars.DOCKER_NAME }}
             sudo docker run -dp 10000:10000 --name ${{ vars.DOCKER_NAME }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ vars.DOCKER_NAME }}
